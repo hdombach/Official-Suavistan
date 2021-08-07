@@ -1,0 +1,10 @@
+<h2><%= song.name %></h2>
+<a href="/musics/<%= song.id%>/edit">Edit</a>
+<%- include('../partials/deleteForm', {url: `/musics/${song.id}`}) %>
+
+<% if (song.playlists.length > 0) { %>
+	<h2>Appears in</h2>
+	<% song.playlists.forEach(playlist => { %>
+		<label><%= playlist.name %></label>
+	<% }) %>
+<% } %>

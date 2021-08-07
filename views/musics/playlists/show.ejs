@@ -1,0 +1,7 @@
+<h2><%= playlist.name %></h2>
+<a href="/musics/playlists<%= playlist.id%>/edit">Edit</a>
+<%- include('../../partials/deleteForm', {url: `/musics/playlists/${playlist.id}`}) %>
+
+<% songs.forEach(song => { %>
+	<%- incldue('../../partials/song.ejs', {song: song, playlists: playlists}) %>
+<% }) %>

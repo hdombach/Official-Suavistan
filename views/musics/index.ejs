@@ -1,0 +1,12 @@
+
+<%- include('../partials/header.ejs') %>
+<h2>Search Songs</h2>
+<form action="/musics" method="GET">
+	<label>Name</label>
+	<input type="text" name="name" value= <%= searchOptions.name %>>
+	<button type="submit">Search</button>
+</form>
+<br>
+<% songs.forEach(song => { %>
+	<%- include('../partials/song.ejs', {song: song, playlists: playlists}) %>
+<% }) %>

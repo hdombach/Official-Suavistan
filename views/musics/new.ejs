@@ -1,0 +1,8 @@
+<%- include('../partials/header.ejs') %>
+<h2>New Author</h2>
+
+<form action="/musics" method="POST">
+	<%- include('_form_fields.ejs') %> 
+	<a href="/musics">Cancel</a>
+	<button type="submit">Create</button>
+</form>
