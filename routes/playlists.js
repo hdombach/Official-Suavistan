@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Playlist = require('../models/playlist.js');
+const Song = require('../models/song.js')
 
 //list all playlists owned by user
 router.get('/', async (req, res) => {
@@ -45,7 +46,7 @@ router.get('/:id', async (req, res) => {
 		const playlists = await Playlist.find()
 		const playlist = await Playlist.findById(req.params.id)
 		const songs = await Song.find({playlists: req.params.id})
-		req.render('musics/playlists/show.ejs', {playlist: playlist, songs: songs, playlists: playlists})
+		res.render('musics/playlists/show.ejs', {playlist: playlist, songs: songs, playlists: playlists})
 	} catch (error) {
 		console.log(error)
 		res.redirect('/');
@@ -69,7 +70,7 @@ router.put('/:id', async (req, res) => {
 	try {
 		playlist = await Playlist.findById(req.params.id)
 		playlist.name = req.body.name
-		playlist.description = req.body.description	
+		playlist.description = req.body.description
 
 		await playlist.save()
 		res.redirect(`/musics/playlists/${playlist.id}`)
@@ -97,7 +98,8 @@ router.delete('/:id', async (req, res) => {
 		if (playlist == null) {
 			res.redirect('/')
 		} else {
-			res.redirect(`/musics/${song.id}`)
+			///maybe show warning that have to have no songs
+			res.redirect(`/musics/playlists/${playlist.id}`)
 		}
 	}
 })

@@ -1,7 +1,17 @@
+<%- include('../../partials/header.ejs') %>
 <h2><%= playlist.name %></h2>
-<a href="/musics/playlists<%= playlist.id%>/edit">Edit</a>
+<p><%= playlist.description %></p>
+<a href="/musics/playlists/<%= playlist.id%>/edit">Edit</a>
 <%- include('../../partials/deleteForm', {url: `/musics/playlists/${playlist.id}`}) %>
 
+<br>
+<h2>Songs</h2>
 <% songs.forEach(song => { %>
-	<%- incldue('../../partials/song.ejs', {song: song, playlists: playlists}) %>
+	<%- include('../../partials/song.ejs', {song: song, playlists: playlists}) %>
 <% }) %>
+
+<%- include('../../partials/controlsOverlay.ejs') %>
+
+<script>
+	songs = <%- JSON.stringify(songs) %>;
+</script>

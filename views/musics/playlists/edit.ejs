@@ -1,8 +1,8 @@
 <%- include('../../partials/header.ejs') %>
 <h2>Edit Song</h2>
 
-<form action="/musics/playlsits/<%= playlist.id %>" method="POST">
+<form action="/musics/playlists/<%= playlist.id %>?_method=PUT" method="POST">
 	<%- include('_form_fields.ejs') %> 
 	<a href="/musics/playlists">Cancel</a>
-	<button type="submit">Create</button>
+	<button type="submit">Update</button>
 </form>

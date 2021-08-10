@@ -11,6 +11,7 @@ const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const methodOverride = require('method-override')
 app.use(require('express-session')({
 	secret: process.env.SESSION_SECRET,
 	resave: false,
@@ -18,6 +19,7 @@ app.use(require('express-session')({
 }))
 app.use(passport.initialize());
 app.use(passport.session())
+app.use(methodOverride('_method'))
 
 const expressLayouts = require('express-ejs-layouts')
 app.set('layout', 'layouts/layout.ejs')

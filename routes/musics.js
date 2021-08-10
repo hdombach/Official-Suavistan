@@ -90,6 +90,24 @@ router.put('/:id', async (req, res) => {
 	}
 })
 
+//adds a song to a playlist
+router.put('/:id/:aid', async (req, res) => {
+	let song
+	try {
+		song = await Song.findById(req.params.id)
+		
+		await Playlist.findById(req.params.id)
+
+		song.playlists.push(req.params.aid)
+
+		await song.save()
+
+	} catch (error) {
+		
+	}
+	res.redirect('/musics')
+})
+
 //delete song
 router.delete('/:id', async (req, res) => {
 	let song 

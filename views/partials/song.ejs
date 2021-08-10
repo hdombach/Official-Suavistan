@@ -1,24 +1,26 @@
 <div><%= song.name %></div>
-	<a href="/musics/<%= song.id %>">View</a>
-	<a href="/musics/<%= song.id %>/edit">Edit</a>
-	<%- include('./deleteForm.ejs', {url: `/musics/${song.id}`}) %>
-	<div class="dropdown">
-		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<span class="material-icons">more_horiz</span>
-		</button>
-		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item dropdown-toggle">Add to playlist</a>
-			<li class="dropdown-submenu">
-				<ul class="dropdown-menu">
-					<% playlists.forEach(playlist => { %>
-						<li>
-							<a class="dropdown-item"><%=playlist.name%></a>
-						</li>
-					<% }) %>
-				</ul>
-			</li>
-
-			<div class="dropdown-divider"></div>
-			<a class="dropdown-item">Hello</a>
+<span><%= song.artist %></span>
+<div class="dropdown">
+	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<span class="material-icons">more_horiz</span>
+	</button>
+	<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+		<a class="dropdown-item" onclick="playSong('<%= song.ytLink%>')">Play</a>
+		<a class="dropdown-item" href="/musics/<%= song.id%>">View</a>
+		<a class="dropdown-item" href="/musics/<%= song.id%>/edit">Edit</a>
+		<li class="dropdown-submenu">
+			<a  class="dropdown-item" tabindex="-1" href="#">Add to playlist</a>
+			<ul class="dropdown-menu">
+			<% playlists.forEach(playlist => { %>
+				<form action="/musics/<%= song.id%>/<%= playlist.id%>?_method=PUT" method="POST">
+					<button type="submit"><%= playlist.name %></button>
+				</form>
+			<% }) %>
+			</ul>
+		</li>
+		<div class="dropdown-divider"></div>
+		<div class="dropdown-item">
+			<%- include('./deleteForm.ejs', {url: `/musics/${song.id}`}) %>
 		</div>
-	</div>
+		</ul>
+</div>
