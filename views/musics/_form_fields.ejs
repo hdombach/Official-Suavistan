@@ -4,3 +4,5 @@
 <input type="text" name="artist" value = '<%= song.artist %>'>
 <Label>Youtube Link</Label>
 <input type="url" name="ytLink" value = '<%= song.ytLink %>'>
+<Label>Explicit</Label>
+<input type="checkbox" name="explicit" value = 'isExplicit' <%= Boolean(song.explicit) ? 'checked' : '' %>>

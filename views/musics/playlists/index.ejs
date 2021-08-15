@@ -11,6 +11,7 @@
 		<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
 			<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>">View</a>
 			<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>/edit">Edit</a>
+			<%- include('../../partials/deleteForm.ejs', {url: `/musics/playlists/${playlist.id}`}) %>
 		</ul>
 	</div>
 <% }) %>

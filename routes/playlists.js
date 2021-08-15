@@ -42,11 +42,20 @@ router.get('/new', (req, res) => {
 
 //show specific playlist
 router.get('/:id', async (req, res) => {
+	let searchOptions = {}
+	if (req.query.name != null && req.query.name != '') {
+		searchOptions.name = new RegExp(req.query.name, 'i')
+	}
+
 	try {
 		const playlists = await Playlist.find()
 		const playlist = await Playlist.findById(req.params.id)
 		const songs = await Song.find({playlists: req.params.id})
-		res.render('musics/playlists/show.ejs', {playlist: playlist, songs: songs, playlists: playlists})
+		var searchedSongs = []
+		if (searchOptions.name) {
+			searchedSongs = await Song.find(searchOptions)
+		}
+		res.render('musics/playlists/show.ejs', {playlist: playlist, songs: songs, playlists: playlists, searchOptions: req.query, searchedSongs: searchedSongs})
 	} catch (error) {
 		console.log(error)
 		res.redirect('/');

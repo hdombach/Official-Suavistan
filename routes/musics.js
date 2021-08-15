@@ -23,7 +23,8 @@ router.post('/', async (req, res) => {
 	const song = new Song({
 		name: req.body.name,
 		artist: req.body.artist,
-		ytLink: req.body.ytLink
+		ytLink: req.body.ytLink,
+		explicit: Boolean(req.body.explicit)
 	})
 
 	try {
@@ -73,6 +74,7 @@ router.put('/:id', async (req, res) => {
 		song.name = req.body.name
 		song.artist = req.body.artist
 		song.ytLink = req.body.ytLink
+		song.explicit = Boolean(req.body.explicit)
 
 		await song.save()
 		res.redirect(`/musics/${song.id}`)

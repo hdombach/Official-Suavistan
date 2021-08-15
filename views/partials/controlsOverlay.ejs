@@ -1,9 +1,15 @@
-<script src="/scripts/songs.js"></script>
 <div>
-	<iframe width="420" height="315" id="ytFrame"></iframe>
+	<div id="player"></div>
 	<button>
 		<span class="material-icons">
 		play_circle_filled
 		</span>
 	</button>
 </div>
+
+<% const songIds = []; songs.forEach(song => { songIds.push(song.ytLink) }) %>
+<script>
+	var songs = <%- JSON.stringify(songIds) %>;
+</script>
+
+<script src="/scripts/songs.js"></script>

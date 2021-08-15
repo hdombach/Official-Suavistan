@@ -5,7 +5,7 @@
 		<span class="material-icons">more_horiz</span>
 	</button>
 	<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-		<a class="dropdown-item" onclick="playSong('<%= song.ytLink%>')">Play</a>
+		<a class="dropdown-item" onclick="playSong('<%= index %>')">Play</a>
 		<a class="dropdown-item" href="/musics/<%= song.id%>">View</a>
 		<a class="dropdown-item" href="/musics/<%= song.id%>/edit">Edit</a>
 		<li class="dropdown-submenu">

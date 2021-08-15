@@ -7,6 +7,7 @@
 	<button type="submit">Search</button>
 </form>
 <br>
-<% songs.forEach(song => { %>
-	<%- include('../partials/song.ejs', {song: song, playlists: playlists}) %>
-<% }) %>
+<% for (let i = 0; i < songs.length; i++) { %>
+	<%- include('../partials/song.ejs', {song: songs[i], playlists: playlists, index: i}) %>
+<% } %>
+<%- include('../partials/controlsOverlay.ejs', {songs: songs}) %>

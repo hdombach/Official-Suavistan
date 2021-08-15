@@ -6,12 +6,26 @@
 
 <br>
 <h2>Songs</h2>
-<% songs.forEach(song => { %>
-	<%- include('../../partials/song.ejs', {song: song, playlists: playlists}) %>
-<% }) %>
+<% for (let i = 0; i < songs.length; i++) { %>
+	<%- include('../../partials/song.ejs', {song: songs[i], playlists: playlists, index: i}) %>
+<% } %>
 
-<%- include('../../partials/controlsOverlay.ejs') %>
+<%- include('../../partials/controlsOverlay.ejs', {songs: songs}) %>
 
-<script>
-	songs = <%- JSON.stringify(songs) %>;
-</script>
+<a class="btn btn-primary" data-toggle="collapse" href="#searchCollapse" role="button" aria-expanded="false" aria-controls="searchCollapse">
+    Link with href
+</a>
+<div class="collapse" id="searchCollapse">
+	<div class="card card-body">
+		<h2>Search</h2>
+		<form action="/musics/playlists/<%= playlist.id %>" method="GET">
+			<label>Name</label>
+			<input type="text" name="name" value= <%= searchOptions.name %>>
+			<button type="submit">Search</button>
+		</form>
+		<br>
+		<% searchedSongs.forEach(song => { %>
+			<label><%= song.name %></label>
+		<% }) %>
+	</div>
+  </div>

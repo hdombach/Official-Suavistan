@@ -28,6 +28,10 @@ const songSchema = new mongoose.Schema({
 	dateCreated :{
 		type : Date,
 		default : Date.now
+	},
+	explicit :{
+		type: Boolean,
+		defualt: false
 	}
 })
 
