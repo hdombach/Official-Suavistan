@@ -2,13 +2,14 @@
 h1 {
 	font-family: 'Tangerine';
 	font-size: 46pt;
+    color: var(--color-text-important);
 
 }
 
 h2 {
 	font-family: 'Tangerine';
 	font-size: 32pt;
-	color: rgb(180, 46, 2);
+    color: var(--color-text-important);
 }
 
 h3 {
@@ -18,10 +19,23 @@ h3 {
 body {
     background: linear-gradient(to top, var(--color-background-dark), var(--color-background-light));
     min-height: 100vh;
+    color: var(--color-text);
 }
 
 *, *::before, *::after {
     box-sizing: border-box;
+}
+
+
+.song {
+
+}
+
+.btn-min {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    color: var(--color-text);
 }
 
 /* stuff for nested drowpdown menues */

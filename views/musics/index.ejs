@@ -1,5 +1,4 @@
 
-<%- include('../partials/header.ejs') %>
 <h2>Search Songs</h2>
 <form action="/musics" method="GET">
 	<label>Name</label>
@@ -7,7 +6,16 @@
 	<button type="submit">Search</button>
 </form>
 <br>
-<% for (let i = 0; i < songs.length; i++) { %>
-	<%- include('../partials/song.ejs', {song: songs[i], playlists: playlists, index: i}) %>
-<% } %>
+<table class="table">
+	<thead>
+		<th>Name</th>
+		<th>Artist</th>
+		<th> </th>
+	</thead>
+	<tbody>
+		<% for (let i = 0; i < songs.length; i++) { %>
+			<%- include('../partials/song.ejs', {song: songs[i], playlists: playlists, index: i}) %>
+		<% } %>
+	</tbody>
+</table>
 <%- include('../partials/controlsOverlay.ejs', {songs: songs}) %>

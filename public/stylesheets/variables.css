@@ -1,5 +1,8 @@
 :root {
-	--color-background-dark: hsl(0, 0%, 80%);
-	--color-background-light: hsl(0, 0%, 100%);
-	color: green;
+	--color-highlight: 80;
+	--color-background-dark: hsl(var(--color-highlight), 0%, 5%);
+	--color-background-light: hsl(var(--color-highlight), 15%, 25%);
+	--color-text-important: hsl(var(--color-highlight), 40%, 80%);
+	--color-text: rgba(255, 255, 255, 0.8);
+	--color-text-secondary: rgba(1, 1, 1, 0.7);
 }
