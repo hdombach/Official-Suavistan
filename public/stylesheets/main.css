@@ -2,8 +2,10 @@
 .title {
     font-family: 'Tangerine';
     font-size: 32pt;
-    color: var--color-text-important;
+    color: var(--color-text-important);
     line-height: 80%;
+
+    transition: color var(--transition-length);
 }
 
 h1 {
@@ -11,22 +13,36 @@ h1 {
 	font-size: 46pt;
     color: var(--color-text-important);
 
+    transition: color var(--transition-length);
+
 }
 
 h2 {
 	font-family: 'Tangerine';
 	font-size: 32pt;
     color: var(--color-text-important);
+
+    transition: color var(--transition-length);
 }
 
 h3 {
 	font-family: 'Tangerine';
 }
 
+#backgroundSVG {
+    position: fixed;
+    z-index: -10;
+}
+
+#grad1 > stop {
+    transition: stop-color var(--transition-length);
+}
+
 body {
-    background: linear-gradient(to top, var(--color-background-dark), var(--color-background-light));
     min-height: 100vh;
     color: var(--color-text);
+
+    z-index: 1;
 }
 
 p {
@@ -49,6 +65,24 @@ table {
     border-collapse: collapse;
 }
 
+.controls {
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100vw;
+    margin: 0px;
+}
+
+.controls > #player {
+    padding: 0;
+}
+
+.controls > #bar {
+    border-top: 1px solid var(--color-border);
+    height: 50px;
+    background-color: var(--color-background-transparent);
+}
+
 .search-transparent {
     background-color: rgba(0, 0, 0, 0.3);
 }
@@ -67,11 +101,21 @@ table {
 
 }
 
+.link {
+    margin: 0;
+    padding: 5px;
+    color: var(--color-text);
+    text-decoration: underline;
+}
+
 .btn-min {
     background-color: transparent;
     margin: 0;
     padding: 0;
     color: var(--color-text);
+}
+.btn-min:hover, .link:hover {
+    color: var(--color-text-important);
 }
 
 .btn-transparent, .transparent, .search-transparent {

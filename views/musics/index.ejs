@@ -8,17 +8,8 @@
 		</div>
 	</div>
 </form>
+<a class="link" href="/musics/new">Add Song</a>
 <br>
-<table class="container-fluid">
-	<thead>
-		<th>Name</th>
-		<th>Artist</th>
-		<th> </th>
-	</thead>
-	<tbody>
-		<% for (let i = 0; i < songs.length; i++) { %>
-			<%- include('../partials/song.ejs', {song: songs[i], playlists: playlists, index: i}) %>
-		<% } %>
-	</tbody>
-</table>
+<br>
+<%- include('../partials/songs.ejs', {songs: songs, playlists: playlists}) %>
 <%- include('../partials/controlsOverlay.ejs', {songs: songs}) %>

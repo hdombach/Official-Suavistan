@@ -24,7 +24,8 @@ router.post('/', async (req, res) => {
 		name: req.body.name,
 		artist: req.body.artist,
 		ytLink: req.body.ytLink,
-		explicit: Boolean(req.body.explicit)
+		explicit: Boolean(req.body.explicit),
+		colorHue: req.body.colorHue
 	})
 
 	try {
@@ -75,9 +76,11 @@ router.put('/:id', async (req, res) => {
 		song.artist = req.body.artist
 		song.ytLink = req.body.ytLink
 		song.explicit = Boolean(req.body.explicit)
+		console.log(req.body.colorhue)
+		song.colorHue = req.body.colorHue
 
 		await song.save()
-		res.redirect(`/musics/${song.id}`)
+		res.redirect('/musics')
 
 	} catch (error) {
 		console.log(error)

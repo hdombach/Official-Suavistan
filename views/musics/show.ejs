@@ -4,8 +4,12 @@
 <%- include('../partials/deleteForm', {url: `/musics/${song.id}`}) %>
 
 <% if (song.playlists.length > 0) { %>
-	<h2>Appears in</h2>
+	<h2>Appearsd in</h2>
 	<% song.playlists.forEach(playlist => { %>
 		<label><%= playlist.name %></label>
 	<% }) %>
 <% } %>
+
+<script>
+	updateColor('<%= song.colorHue %>');
+</script>

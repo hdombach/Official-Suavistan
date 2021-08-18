@@ -8,4 +8,5 @@
 	--color-border: rgba(255, 255, 255, 0.2);
 	--color-background-transparent:rgba(0, 0, 0, 0.3);
 	--color-background-transparent-highlight: rgba(255, 255, 255, 0.3);
+	--transition-length: 1s;
 }

@@ -1,4 +1,4 @@
-<tr onclick="playSong('<%= index %>')">
+<tr onclick="if (!event.defaultPrevented) {playSong('<%= index %>')}">
 	<td><%= song.name %></td>
 	<td><%= song.artist %></td>
 	<td>

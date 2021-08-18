@@ -1,4 +1,4 @@
-<tr>
+<tr onclick="if(!event.defaultPrevented) {location.href = '/musics/playlists/<%= playlist.id %>';}">
 	<td><%= playlist.name %></td>
 	<td><%= playlist.owner.name %></td>
 	<td>

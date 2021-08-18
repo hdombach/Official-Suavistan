@@ -1,15 +1,30 @@
-<div>
+<div class="controls">
 	<div id="player"></div>
-	<button>
-		<span class="material-icons">
-		play_circle_filled
-		</span>
-	</button>
+	<div class="row justify-content-center" id="bar">
+		<button class="btn btn-min">
+			<span class="material-icons">
+				skip_previous
+			</span>
+		</button>
+		<button class="btn btn-min">
+			<span class="material-icons">
+				play_circle
+			</span>
+		</button>
+		<button class="btn btn-min">
+			<span class="material-icons">
+				skip_next
+			</span>
+		</button>
+	</div>
 </div>
 
-<% const songIds = []; songs.forEach(song => { songIds.push(song.ytLink) }) %>
-<script>
-	var songs = <%- JSON.stringify(songIds) %>;
-</script>
-
 <script src="/scripts/songs.js"></script>
+
+<% var songIds = []; const hues = []; songs.forEach(song => { songIds.push('' + song.ytLink); hues.push(song.colorHue); })%>
+<script>
+	songs = <%- JSON.stringify(songIds) %>;
+	console.log(songs)
+	colorHues = <%- JSON.stringify(hues) %>;
+	console.log(colorHues)
+</script>

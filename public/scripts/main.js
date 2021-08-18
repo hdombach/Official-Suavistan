@@ -4,3 +4,9 @@ function solo(event, f) {
 		f();
 	}
 }
+
+function updateColor(hue) {
+	let root = document.documentElement
+
+	root.style.setProperty('--color-highlight', hue)
+}

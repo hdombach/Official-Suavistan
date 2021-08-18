@@ -5,10 +5,7 @@
 <%- include('../../partials/deleteForm', {url: `/musics/playlists/${playlist.id}`}) %>
 
 <br>
-<h2>Songs</h2>
-<% for (let i = 0; i < songs.length; i++) { %>
-	<%- include('../../partials/song.ejs', {song: songs[i], playlists: playlists, index: i}) %>
-<% } %>
+<%- include('../../partials/songs.ejs', {songs: songs, playlists: playlists}) %>
 
 <%- include('../../partials/controlsOverlay.ejs', {songs: songs}) %>
 

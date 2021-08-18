@@ -13,6 +13,10 @@ const songSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	description: {
+		type: String,
+		default: ""
+	},
 	favourites: {
 		type: [mongoose.Schema.Types.ObjectId],
 		required: true,
@@ -32,6 +36,9 @@ const songSchema = new mongoose.Schema({
 	explicit :{
 		type: Boolean,
 		defualt: false
+	},
+	colorHue: {
+		type: Number
 	}
 })
 

@@ -1,4 +1,5 @@
-console.log(songs)
+var songs;
+var colorHues;
 
 var songIndex = 0;
 
@@ -28,6 +29,8 @@ function playSong(index) {
 		}
 
 		player.loadVideoById(youtube_parser(songs[index]), 0)
+		updateColor(colorHues[index])
+		console.log(colorHues[index])
 	} else {
 		console.error("The list of songs was not passed to client")
 	}
