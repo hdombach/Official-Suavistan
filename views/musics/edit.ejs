@@ -1,8 +1,8 @@
 
 <h2>Edit Song</h2>
 
-<form action="/musics/<%= song.id %>?_method=PUT" method="POST">
+<form class="form" action="/musics/<%= song.id %>?_method=PUT" method="POST">
 	<%- include('_form_fields.ejs') %> 
 	<a href="/musics">Cancel</a>
-	<button type="submit">Save</button>
+	<button class="btn btn-transparent" type="submit">Save</button>
 </form>

@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Playlist = require('../models/playlist.js');
 const Song = require('../models/song.js')
+const User = require('../models/user.js')
 
 //list all playlists owned by user
 router.get('/', async (req, res) => {
 	try {
-		const playlists = await Playlist.find({owner: req.user.id})
+		const playlists = await Playlist.find({owner: req.user.id}).populate('owner').exec();
 		res.render('musics/playlists/index.ejs', {playlists: playlists})
-	} catch(error) {			
+	} catch(error) {
+		console.log(error)			
 		res.redirect('/')
 	}	
 })

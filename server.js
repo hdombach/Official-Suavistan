@@ -7,6 +7,8 @@ if (process.env.NODE_ENV !== 'production') {
 //mongod --dbpath data/db
 //in new tab: mongo
 
+console.log('start server')
+
 const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');

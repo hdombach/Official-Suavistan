@@ -43,7 +43,7 @@ function onPlayerStateChange(state) {
 }
 
 function onPlayerReady() {
-	playSong(0)
+	//playSong(0)
 }
 
 var player;

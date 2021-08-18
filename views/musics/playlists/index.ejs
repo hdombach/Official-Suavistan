@@ -1,16 +1,13 @@
 
-
-<% playlists.forEach(playlist => { %>
-	<div><%= playlist.name %></div>
-	<div class="dropdown">
-		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<span class="material-icons">more_horiz</span>
-		</button>
-
-		<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-			<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>">View</a>
-			<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>/edit">Edit</a>
-			<%- include('../../partials/deleteForm.ejs', {url: `/musics/playlists/${playlist.id}`}) %>
-		</ul>
-	</div>
-<% }) %>
+<table class="container-fluid">
+	<thead>
+		<th>Name</th>
+		<th>Owner</th>
+		<th></th>
+	</thead>
+	<tbody>
+		<% playlists.forEach(playlist => { %>
+			<%- include('../../partials/playlist.ejs', { playlist: playlist }) %>
+		<% }) %>
+	</tbody>
+</table>

@@ -1,0 +1,19 @@
+<tr>
+	<td><%= playlist.name %></td>
+	<td><%= playlist.owner.name %></td>
+	<td>
+		<div class="dropdown">
+			<button class="btn btn-min" type="button" onclick="event.preventDefault();" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="material-icons">more_horiz</span>
+			</button>
+			<ul class="dropdown-menu dropdown-transparent" role="menu" aria-labelledby="dropdownMenu">
+				<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>">View</a>
+				<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>/edit">Edit</a>
+				<div class="dropdown-divider transparent"></div>
+				<div class="dropdown-item dropdown-item-transparent">
+					<%- include('./deleteForm.ejs', {url: `/musics/playlists/${playlist.id}`}) %>
+				</div>
+			</ul>
+		</div>
+	</td>
+</tr>
