@@ -1,21 +1,32 @@
 <div class="controls">
 	<div id="player"></div>
-	<div class="row justify-content-center" id="bar">
-		<button class="btn btn-min">
-			<span class="material-icons">
-				skip_previous
-			</span>
-		</button>
-		<button class="btn btn-min">
-			<span class="material-icons">
-				play_circle
-			</span>
-		</button>
-		<button class="btn btn-min">
-			<span class="material-icons">
-				skip_next
-			</span>
-		</button>
+	<div id="control-buttons">
+		<div id="left-buttons">
+			<button class="btn btn-min" id="viewerToggle">
+				<span class="material-icons" style="padding-left: 10px;">
+					expand_more
+				</span>
+			</button>
+		</div>
+		<div id="center-buttons">
+			<button class="btn btn-min" onclick="previousSong()">
+				<span class="material-icons">
+					skip_previous
+				</span>
+			</button>
+			<button class="btn btn-min" onclick="toggleSong()">
+				<span class="material-icons" id='toggleIcon'>
+					play_circle
+				</span>
+			</button>
+			<button class="btn btn-min" onclick="nextSong()">
+				<span class="material-icons">
+					skip_next
+				</span>
+			</button>
+		</div>
+		<div id="right-buttons">
+		</div>
 	</div>
 </div>
 
@@ -24,7 +35,16 @@
 <% var songIds = []; const hues = []; songs.forEach(song => { songIds.push('' + song.ytLink); hues.push(song.colorHue); })%>
 <script>
 	songs = <%- JSON.stringify(songIds) %>;
-	console.log(songs)
 	colorHues = <%- JSON.stringify(hues) %>;
-	console.log(colorHues)
+
+	let toggle = document.getElementById('viewerToggle');
+	toggle.addEventListener('click', function() {
+		document.getElementById('player').classList.toggle('hidden');
+		let icon = toggle.children[0].innerHTML
+		if (icon == 'expand_less') {
+			toggle.children[0].innerHTML = 'expand_more';
+		} else {
+			toggle.children[0].innerHTML = 'expand_less';
+		}
+	});
 </script>

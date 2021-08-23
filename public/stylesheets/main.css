@@ -29,6 +29,11 @@ h3 {
 	font-family: 'Tangerine';
 }
 
+.secondary {
+    color: var(--color-text-secondary);
+    font-weight: 200;
+}
+
 #backgroundSVG {
     position: fixed;
     z-index: -10;
@@ -71,11 +76,43 @@ table {
     left: 0;
     width: 100vw;
     margin: 0px;
+    pointer-events: none;
+}
+
+.controls > #control-buttons {
+    background-color: var(--color-background-transparent);
+    backdrop-filter: blur(5px);
+    flex-wrap: nowrap;
+    pointer-events: fill;
 }
 
 .controls > #player {
     padding: 0;
+    height: 30vh;
+    width: 48.6vh;
+    pointer-events: fill;
 }
+.controls > #player.hidden {
+    display: none;
+}
+
+#control-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+#control-buttons > div {
+    width: 100px;
+}
+#center-buttons {
+    flex-wrap: nowrap;
+}
+
+#viewerControler.hidden {
+
+    content: expand_less;
+    color: red;
+}
+
 
 .controls > #bar {
     border-top: 1px solid var(--color-border);

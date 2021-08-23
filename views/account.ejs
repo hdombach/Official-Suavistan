@@ -1,0 +1,17 @@
+<script>
+	updateColor('<%= user.colorHue %>');
+</script>
+
+<h1>Account</h1>
+
+<div class="row">
+	<p class="secondary col-2">Name</p>
+	<p class="col"><%= user.name %></p>
+</div>
+
+<div class="row">
+	<p class="secondary col-2">Email</p>
+	<p class="col"><%= user.email %></p>
+</div>
+
+<a href="/account/edit" class="btn btn-transparent">Edit</a>

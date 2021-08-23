@@ -9,7 +9,30 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+var startTime;
 
+let toggleIcon = document.getElementById('toggleIcon')
+function toggleSong() {
+	let state = player.getPlayerState()
+	if (state == 1) {
+		player.pauseVideo()
+	} else if (state == 2) {
+		player.playVideo()
+	}
+}
+
+function previousSong() {
+	//if it is now yet 2 seconds then goto previous song else reset
+	if (Date.now() - startTime > 5000) {
+		playSong(songIndex);
+	} else {
+		songIndex--;
+		if (0 > songIndex) {
+			songIndex = songs.length - 1;
+		}
+		playSong(songIndex);
+	}
+}
 
 function nextSong() {
 	songIndex++;
@@ -30,7 +53,7 @@ function playSong(index) {
 
 		player.loadVideoById(youtube_parser(songs[index]), 0)
 		updateColor(colorHues[index])
-		console.log(colorHues[index])
+		startTime = Date.now()
 	} else {
 		console.error("The list of songs was not passed to client")
 	}
@@ -42,6 +65,10 @@ var player;
 function onPlayerStateChange(state) {
 	if (state.data == 0) {
 		nextSong();
+	} else if (state.data == 1) {
+		toggleIcon.innerHTML = 'pause_circle'
+	} else if (state.data == 2) {
+		toggleIcon.innerHTML = 'play_circle'
 	}
 }
 
@@ -52,8 +79,8 @@ function onPlayerReady() {
 var player;
 function onYouTubeIframeAPIReady() {
 	player = new YT.Player('player', {
-		height: '216',
-		width: '384',
+		height: '200',
+		width: '324',
 		playerVars: {
 		'playsinline': 1
 		},

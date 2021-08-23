@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Song = require('../models/song.js')
 const Playlist = require('../models/playlist.js')
+const authentication = require('./athentication')
 
 //list of all songs 
-router.get('/', async (req, res) =>{
+router.get('/', authentication.check, async (req, res) =>{
 	let searchOptions = {}
 	if (req.query.name != null && req.query.name != '') {
 		searchOptions.name = new RegExp(req.query.name, 'i')
@@ -19,7 +20,7 @@ router.get('/', async (req, res) =>{
 })
 
 //create new song
-router.post('/', async (req, res) => {
+router.post('/', authentication.check, async (req, res) => {
 	const song = new Song({
 		name: req.body.name,
 		artist: req.body.artist,
@@ -33,7 +34,7 @@ router.post('/', async (req, res) => {
 		res.redirect('musics')
 	} catch (error) {
 		console.log(error);
-		res.render('musics/new', {
+		res.render('musics/new.ejs', {
 			song: song,
 			errorMessage: 'Error creating song'
 		})
@@ -41,12 +42,12 @@ router.post('/', async (req, res) => {
 })
 
 //new song form
-router.get('/new', (req, res) => {
+router.get('/new', authentication.check, (req, res) => {
 	res.render('musics/new.ejs', {song: new Song() })
 })
 
 //show specific song
-router.get('/:id', async (req, res) => {
+router.get('/:id', authentication.check, async (req, res) => {
 	try {
 		const song = await Song.findById(req.params.id).populate('playlists').exec()
 		res.render('musics/show.ejs', {song: song})
@@ -57,7 +58,7 @@ router.get('/:id', async (req, res) => {
 })
 
 //edit song
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', authentication.check, async (req, res) => {
 	try {
 		const song = await Song.findById(req.params.id)
 		res.render('musics/edit.ejs', {song: song})
@@ -68,7 +69,7 @@ router.get('/:id/edit', async (req, res) => {
 })
 
 //update song
-router.put('/:id', async (req, res) => {
+router.put('/:id', authentication.check, async (req, res) => {
 	let song
 	try {
 		song = await Song.findById(req.params.id)
@@ -96,7 +97,7 @@ router.put('/:id', async (req, res) => {
 })
 
 //adds a song to a playlist
-router.put('/:id/:aid', async (req, res) => {
+router.put('/:id/:aid', authentication.check, async (req, res) => {
 	let song
 	try {
 		song = await Song.findById(req.params.id)
@@ -114,7 +115,7 @@ router.put('/:id/:aid', async (req, res) => {
 })
 
 //delete song
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authentication.check, async (req, res) => {
 	let song 
 	try {
 		song = await Song.findById(req.params.id)

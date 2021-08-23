@@ -7,10 +7,10 @@ module.exports = function(passport){
     passport.use(
 		new LocalStrategy({usernameField: 'email'}, (email,password,done)=>{
             //match user
-            User.findOne({email:email})
+            User.findOne({email: { $regex: new RegExp(email, "i") }})
             .then((user)=>{
                 if(!user){
-                    return done(null,false,{message:'email not registered'});
+                    return done(null,false,{message:'Password or email is incorrect.'});
                 }
                 //math passwords
                 bcrypt.compare(password, user.password,(err,isMatch)=>{
@@ -18,7 +18,7 @@ module.exports = function(passport){
                     if(isMatch){
                         return done(null,user);
                     } else{
-                        return done(null,false,{message: 'password incorrect'});
+                        return done(null,false,{message: 'Password or email is incorrect.'});
                     }
                 })
             })

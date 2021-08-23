@@ -3,9 +3,10 @@ const router = express.Router();
 const Playlist = require('../models/playlist.js');
 const Song = require('../models/song.js')
 const User = require('../models/user.js')
+const authentication = require('./athentication')
 
 //list all playlists owned by user
-router.get('/', async (req, res) => {
+router.get('/', authentication.check, async (req, res) => {
 	try {
 		const playlists = await Playlist.find({owner: req.user.id}).populate('owner').exec();
 		res.render('musics/playlists/index.ejs', {playlists: playlists})
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
 	}	
 })
 //create playlist
-router.post('/', async (req, res) => {
+router.post('/', authentication.check, async (req, res) => {
 	const playlist = new Playlist({
 		name: req.body.name,
 		description: req.body.description,
@@ -38,12 +39,12 @@ router.post('/', async (req, res) => {
 
 
 //new book form
-router.get('/new', (req, res) => {
+router.get('/new', authentication.check, (req, res) => {
 	res.render('musics/playlists/new.ejs', {playlist: new Playlist() })	
 })
 
 //show specific playlist
-router.get('/:id', async (req, res) => {
+router.get('/:id', authentication.check, async (req, res) => {
 	let searchOptions = {}
 	if (req.query.name != null && req.query.name != '') {
 		searchOptions.name = new RegExp(req.query.name, 'i')
@@ -65,7 +66,7 @@ router.get('/:id', async (req, res) => {
 })
 
 //edit playlist
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', authentication.check, async (req, res) => {
 	try {
 		const playlist = await Playlist.findById(req.params.id)
 		res.render('musics/playlists/edit.ejs', {playlist: playlist})
@@ -76,7 +77,7 @@ router.get('/:id/edit', async (req, res) => {
 })
 
 //update playlist
-router.put('/:id', async (req, res) => {
+router.put('/:id', authentication.check, async (req, res) => {
 	let playlist
 	try {
 		playlist = await Playlist.findById(req.params.id)
@@ -99,7 +100,7 @@ router.put('/:id', async (req, res) => {
 })
 
 //delete playlist
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authentication.check, async (req, res) => {
 	let playlist
 	try {
 		playlist = await Playlist.findById(req.params.id)
