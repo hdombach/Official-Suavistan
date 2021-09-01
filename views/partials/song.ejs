@@ -1,5 +1,5 @@
 <tr onclick="if (!event.defaultPrevented) {playSong('<%= index %>')}">
-	<td><%= index %></td>
+	<td><%= index + 1%></td>
 	<td><%= song.name %></td>
 	<td><%= song.artist %></td>
 	<td>
@@ -70,7 +70,7 @@
 				<% if (parentPlaylist) { %>
 					<li>
 						<form method="POST" action='/musics/<%= song.id%>/<%= parentPlaylist.id%>?_method=DELETE'>
-							<a class="dropdown-item dropdown-item-transparent" onclick='this.parentNode.submit();'>Remove from playlist</a>
+							<a class="dropdown-item dropdown-item-transparent" onclick='this.parentNode.submit();'>Remove from this playlist</a>
 						</form>
 					</li>
 				<% } %>

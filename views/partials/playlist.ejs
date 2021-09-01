@@ -3,17 +3,17 @@
 	<td><%= playlist.owner.name %></td>
 	<td>
 		<div class="dropdown">
-			<button class="btn btn-min" type="button" onclick="event.preventDefault();" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button class="btn btn-min dropdown-toggle" data-bs-toggle="dropdown" type="button" onclick="event.preventDefault();">
 				<span class="material-icons">more_horiz</span>
 			</button>
-			<ul class="dropdown-menu dropdown-transparent" role="menu" aria-labelledby="dropdownMenu">
-				<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>">View</a>
+			<ul class="dropdown-menu dropdown-transparent" role="menu">
+				<li><a class="dropdown-item dropdown-item-transparent" href="/musics/playlists/<%= playlist.id %>">View</a></li>
 				<% if (user.id == playlist.owner.id) { %>
-					<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>/edit">Edit</a>
+					<li><a class="dropdown-item  dropdown-item-transparent" href="/musics/playlists/<%= playlist.id %>/edit">Edit</a></li>
 					<div class="dropdown-divider transparent"></div>
-					<div class="dropdown-item dropdown-item-transparent">
+					<li class="dropdown-item dropdown-item-transparent">
 						<%- include('./deleteForm.ejs', {url: `/musics/playlists/${playlist.id}`}) %>
-					</div>
+					</li>
 				<% } %>
 			</ul>
 		</div>

@@ -1,0 +1,12 @@
+<h1>Reset Password</h1>
+<form id="passwordResetForm" onsubmit="return requestReset(event)">
+	<div class="form-group">
+		<label for="email">Email</label>
+		<input class="form-control search-transparent" type="email" id="email" name="email" required>
+	</div>
+	<button class="btn btn-transparent" type="submit">Request reset</button>
+</form>
+
+<div id="result"></div>
+
+<script src="/scripts/passwordReset.js"></script>

@@ -63,6 +63,12 @@ app.use(function (req, res, next) {
 		res.locals.errorMessage = query._e;
 	}
 	res.locals.parentPlaylist = false;
+	if (req.user && !req.user.verified) {
+		if (!req.path.includes('/account/verify')) {
+			res.redirect('/account/verify')
+			return;
+		}
+	}
 	next();
 })
 

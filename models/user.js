@@ -14,11 +14,27 @@ const UserSchema  = new mongoose.Schema({
     } ,
     dateCreated :{
         type : Date,
-        default : Date.now
+        default : Date.now()
     },
     colorHue: {
         type: Number,
         default: Math.random() * 359
+    },
+    verified: {
+        type: Boolean,
+        default: false
+    },
+    verificationKey: {
+        type: mongoose.ObjectId,
+        default: new mongoose.Types.ObjectId()
+    },
+    passwordReset: {
+        key: {
+            type: mongoose.ObjectId
+        },
+        date: {
+            type: Date
+        }
     }
 });
 //console.log(new Error().stack)

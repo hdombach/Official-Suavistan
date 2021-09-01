@@ -21,6 +21,9 @@ module.exports = function(passport){
                         return done(null,false,{message: 'Password or email is incorrect.'});
                     }
                 })
+                if (!user.verified) {
+                    //return done(null, false, {message: 'Check your email to verify your account.'});
+                }
             })
             .catch((err)=>{console.log(err); return done(err)})
         })
