@@ -110,7 +110,7 @@ router.get('/account/verify/resend', authentication.check, async (req, res) => {
 })
 
 //should be put but forms don't work in emails so...
-router.get('/account/verify/:id/:vid', async (req, res) => {
+router.get('/account/verify/:id/:vid', authentication.check, async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id)
 		if (user.verificationKey == req.params.vid) {
