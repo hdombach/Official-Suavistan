@@ -32,24 +32,24 @@ router.post('/register', authentication.checkNot, async (req, res) => {
 			throw new Error("Password not the same")
 		}
 		const hashedPassword = await bcrypt.hash(req.body.password, 10)
-		User.findOne({email: req.body.email}).exec((err, user)=> {
-			if (user) {
-				//error user already created
 
-			} else { 
-				const newUser = new User({
-					name: req.body.name,
-					email: req.body.email,
-					password: hashedPassword
-				});
-				newUser.save().then((value) => {
-					res.redirect('/login', {hide_nav: true});
-				}).catch(value=> console.log(value));
-			}
-		})
+		const user = await User.findOne({email: {$regex: new RegExp(req.body.email, "i")}}).exec()
+		if (user) {
+			//error user already created
+			throw new Error("User with same email was already created")
+		} else { 
+			const newUser = new User({
+				name: req.body.name,
+				email: req.body.email,
+				password: hashedPassword
+			});
+			newUser.save().then((value) => {
+				res.redirect('/login');
+			}).catch(value=> console.log(value));
+		}
+
 	} catch (error) {
-		//error
-		console.log(error);
+		res.redirect('/register?_e=' + encodeURIComponent(error.message));
 	}
 })
 

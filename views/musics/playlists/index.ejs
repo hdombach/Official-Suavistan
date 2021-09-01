@@ -7,7 +7,7 @@
 	</thead>
 	<tbody>
 		<% playlists.forEach(playlist => { %>
-			<%- include('../../partials/playlist.ejs', { playlist: playlist }) %>
+			<%- include('../../partials/playlist.ejs', { playlist: playlist, user: user }) %>
 		<% }) %>
 	</tbody>
 </table>

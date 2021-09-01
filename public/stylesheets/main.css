@@ -58,6 +58,10 @@ th {
     border-bottom: 1px solid var(--color-border)
 }
 
+tr {
+    height: var(--table-height);
+}
+
 tbody > tr:hover {
     background-clip: padding-box;
     width: 100%;
@@ -69,6 +73,59 @@ table {
 
     border-collapse: collapse;
 }
+
+.filter {
+    background-color: var(--color-background-transparent);
+    border: 1px solid var(--color-border);
+    border-radius: 50px;
+    padding: 10px;
+    margin: 2px;
+}
+
+.favorite-container {
+    position: relative;
+    width: var(--table-height);
+    min-height: var(--table-height);
+    color: var(--color-text);
+}
+.favorite-container > * {
+    top: 0;
+    left: 0;
+    position: absolute;
+    opacity: 1;
+}
+.favorite-container.selected > *:nth-child(1) {
+    color: var(--color-selected);
+}
+.favorite-container > *:nth-child(2) {
+    z-index: -1;
+    left: 3px;
+}
+.favorite-container > *:nth-child(3) {
+    z-index: -2;
+    left: 6px;
+}
+.favorite-container > *:nth-child(4) {
+    z-index: -3;
+    left: 9px;
+}
+.favorite-container > *:nth-child(5) {
+    z-index: -4;
+    left: 12px;
+}
+.favorite-container > *:nth-child(6) {
+    z-index: -5;
+    left: 15px;
+}
+.favorite-container > *:nth-child(7) {
+    z-index: -6;
+    left: 18px;
+}
+.favorite-container > *:nth-child(8) {
+    z-index: -7;
+    left: 21px;
+}
+
 
 .controls {
     position: fixed;
@@ -144,6 +201,9 @@ table {
     color: var(--color-text);
     text-decoration: underline;
 }
+.link:hover {   
+    text-decoration: underline;
+}
 
 .btn-min {
     background-color: transparent;
@@ -187,30 +247,49 @@ table {
     backdrop-filter: blur(5px);
 }
 
-.dropdown-transparent > a, .dropdown-item-transparent {
+.dropdown-transparent > li, .dropdown-item-transparent {
     color: var(--color-text);
 }
 
-.dropdown-transparent > a:hover, .dropdown-item-transparent:hover {
+.dropdown-transparent > li:hover, .dropdown-item-transparent:hover {
     background-color: var(--color-background-transparent-highlight);
     color: var(--color-text); 
 }
 
 /* stuff for nested drowpdown menues */
 
+.dropdown-menu li {
+  position: relative;
+}
+.dropdown-menu .dropdown-submenu {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: -7px;
+}
+.dropdown-menu .dropdown-submenu-left {
+  right: 100%;
+  left: auto;
+}
+.dropdown-menu > li:hover > .dropdown-submenu {
+  display: block;
+}
 
+/*
 .dropdown-submenu {
     position: relative;
 }
 
 .dropdown-submenu>.dropdown-menu {
     top: 0;
-    left: -100%;
+    width: 100%;
+    right: 0;
     margin-top: -6px;
     margin-right: -1px;
     -webkit-border-radius: 6px 0 6px 6px;
     -moz-border-radius: 6px 0 6px;
     border-radius: 6px 0 6px 6px;
+    overflow: hidden;
 }
 
 .dropdown-submenu:hover>.dropdown-menu {
@@ -236,6 +315,7 @@ table {
     border-left-color: #fff;
 }
 
+
 .dropdown-submenu.pull-left {
     float: none;
 }
@@ -247,3 +327,4 @@ table {
     -moz-border-radius: 6px 0 6px 6px;
     border-radius: 6px 0 6px 6px;
 }
+*/

@@ -9,7 +9,6 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-var startTime;
 
 let toggleIcon = document.getElementById('toggleIcon')
 function toggleSong() {
@@ -23,7 +22,7 @@ function toggleSong() {
 
 function previousSong() {
 	//if it is now yet 2 seconds then goto previous song else reset
-	if (Date.now() - startTime > 5000) {
+	if (player.getCurrentTime() > 5) {
 		playSong(songIndex);
 	} else {
 		songIndex--;
@@ -53,7 +52,6 @@ function playSong(index) {
 
 		player.loadVideoById(youtube_parser(songs[index]), 0)
 		updateColor(colorHues[index])
-		startTime = Date.now()
 	} else {
 		console.error("The list of songs was not passed to client")
 	}

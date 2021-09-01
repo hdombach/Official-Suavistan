@@ -21,6 +21,11 @@ const playlistSchema = new mongoose.Schema({
 	dateCreated :{
 		type : Date,
 		default : Date.now
+	},
+
+	public: {
+		type: Boolean,
+		default: false
 	}
 })
 

@@ -17,7 +17,7 @@ const songSchema = new mongoose.Schema({
 		type: String,
 		default: ""
 	},
-	favourites: {
+	favorites: {
 		type: [mongoose.Schema.Types.ObjectId],
 		required: true,
 		ref: 'User',

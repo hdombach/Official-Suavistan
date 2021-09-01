@@ -18,7 +18,8 @@ const expressLayouts = require('express-ejs-layouts')
 const flash = require('express-flash');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const https = require('http');
+const https = require('http')
+const url = require('url');
 
 app.use(require('express-session')({
 	secret: process.env.SESSION_SECRET,
@@ -47,7 +48,7 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))
 
 
 app.engine('html', require('ejs').renderFile);
-app.set('view-engine', 'ejs')
+app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended: false}));
 app.use(flash())
 
@@ -57,6 +58,11 @@ app.use(function (req, res, next) {
 	} else {
 		res.locals = {userColorHue: 200}
 	}
+	const query = url.parse(req.url, true).query
+	if (query._e) {
+		res.locals.errorMessage = query._e;
+	}
+	res.locals.parentPlaylist = false;
 	next();
 })
 

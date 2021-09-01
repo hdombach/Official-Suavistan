@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Song = require('../models/song.js')
 const Playlist = require('../models/playlist.js')
+const User = require('../models/user.js')
 const authentication = require('./athentication')
+const url = require('url');
 
 //list of all songs 
 router.get('/', authentication.check, async (req, res) =>{
@@ -11,10 +13,60 @@ router.get('/', authentication.check, async (req, res) =>{
 		searchOptions.name = new RegExp(req.query.name, 'i')
 	}
 	try {
-		const songs = await Song.find(searchOptions)
-		const playlists = await Playlist.find()
-		res.render('musics/index.ejs', {songs: songs, searchOptions: req.query, playlists: playlists})
+		const songs = await Song.find(searchOptions).populate('favorites').exec()
+		const users = await User.find()
+		var playlists;
+		await Playlist.find().populate('owner').exec((err, allPlaylists) => {
+			playlists = allPlaylists.filter(playlist => playlist.owner.id == req.user.id || playlist.public)
+			res.render('musics/index.ejs', {songs: songs, users: users, searchOptions: req.query, playlists: playlists, user: req.user})
+		})
 	} catch(error) {
+		console.log(error)
+		res.redirect('/')
+	}
+})
+
+//list of all songs but ajax
+router.get('/search', authentication.check, async (req, res) => {
+	var name;
+	if (req.query.name != null && req.query.name != '') {
+		name = new RegExp(req.query.name, 'i')
+	}
+	let filters = JSON.parse(req.query.filters)
+	var orStatements = []
+	var explicit;
+	for (const filter of filters) {
+		if (filter.type == 'explicit') {
+			explicit = true
+		} else if (filter.type == 'playlist') {
+			orStatements.push({playlists: filter.id})
+		} else if (filter.type == 'user') {
+			orStatements.push({favorites: filter.id})
+		}
+	}
+	var searchOptions;
+	if (orStatements.length > 0) {
+		searchOptions = {$or: orStatements}
+	} else {
+		searchOptions = {}
+	}
+	if (name) {
+		searchOptions.name = name
+	}
+	if (explicit) {
+		searchOptions.explicit = false
+	}
+	console.log(searchOptions)
+	try {
+		const songs = await Song.find(searchOptions).populate('favorites').exec()
+		const users = await User.find()
+		var playlists;
+		await Playlist.find().populate('owner').exec((err, allPlaylists) => {
+			playlists = allPlaylists.filter(playlist => playlist.owner.id == req.user.id || playlist.public)
+			res.render('partials/songs.ejs', {songs: songs, users: users, playlists: playlists, user: req.user, layout: false})
+		})
+	} catch(error) {
+		console.log(error)
 		res.redirect('/')
 	}
 })
@@ -96,13 +148,41 @@ router.put('/:id', authentication.check, async (req, res) => {
 	}
 })
 
+//favorite of song
+router.put('/:id/fav', authentication.check, async (req, res) => {
+	let song
+	try {
+		song = await Song.findById(req.params.id).populate('favorites').exec();
+		var isFavorited = false;
+		for (const favorite of song.favorites) {
+			if (favorite.id == req.user.id) {
+				isFavorited = true;
+				break;
+			}
+		}
+		if (isFavorited) {
+			song.favorites =  song.favorites.filter(favorite => favorite.id != req.user.id)
+		} else {
+			song.favorites.push(req.user)
+		}
+		await song.save();
+		res.send(!isFavorited);
+	} catch (error) {
+		console.log(error)
+		res.send(error.message)
+	}
+})
+
 //adds a song to a playlist
 router.put('/:id/:aid', authentication.check, async (req, res) => {
 	let song
 	try {
 		song = await Song.findById(req.params.id)
 		
-		await Playlist.findById(req.params.id)
+		var playlist = await Playlist.findById(req.params.aid).populate('owner').exec()
+		if (!(playlist.owner.id == req.user.id || playlist.public)) {
+			throw new Error('You cannot add songs to this playlist')
+		}
 
 		song.playlists.push(req.params.aid)
 
@@ -110,8 +190,39 @@ router.put('/:id/:aid', authentication.check, async (req, res) => {
 
 	} catch (error) {
 		
+		res.redirect('/musics?_e=' + encodeURIComponent(error.message))
+		return
 	}
-	res.redirect('/musics')
+
+	const query = url.parse(req.url, true).query
+	if (query.url) {
+		res.redirect(query.url)
+	} else {
+		res.redirect('/musics')	}
+})
+
+//removes a song from a playlist
+router.delete('/:id/:aid', authentication.check, async (req, res) => {
+	let song
+	try {
+		song = await Song.findById(req.params.id)
+
+		var playlist = await Playlist.findById(req.params.aid).populate('owner').exec()
+		if (!(playlist.owner.id == req.user.id || playlist.public)) {
+			throw new Error('You cannot remove songs from this playlist')
+		}
+
+		while (song.playlists.includes(req.params.aid)) {
+			let index = song.playlists.indexOf(req.params.aid)
+			song.playlists.splice(index, 1);
+		}
+		
+		await song.save()
+		res.redirect('/musics/playlists/' + req.params.aid)
+	} catch (error) {
+		res.redirect('/musics?_e=' + encodeURIComponent(error.message))
+		return
+	}
 })
 
 //delete song

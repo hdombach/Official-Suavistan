@@ -1,25 +1,79 @@
 <tr onclick="if (!event.defaultPrevented) {playSong('<%= index %>')}">
+	<td><%= index %></td>
 	<td><%= song.name %></td>
 	<td><%= song.artist %></td>
 	<td>
+		<%
+		
+		var favorites = {hues: [], isFavorited: false, description: 'Favorited by '};
+		var others = []
+		for (const favorite of song.favorites) {
+			if (favorite.id == user.id) {
+				favorites.isFavorited = true
+			} else {
+				favorites.hues.push(favorite.colorHue)
+				others.push(favorite.name);
+			}
+		}
+		
+		if (others.length == 0) {
+			if (favorites.isFavorited) {
+				favorites.description += 'you.'
+			} else {
+				favorites.description += 'no one.'
+			}
+		} else if (others.length == 1) {
+			if (favorites.isFavorited) {
+				favorites.description += 'you and ' + others[0] + '.'
+			} else {
+				favorites.description += others[0] + '.'
+			}
+		} else {
+			if (favorites.isFavorited) {
+				favorites.description += 'you, '
+			}
+			for (var i = 0; i < others.length - 1; i++) {
+				favorites.description += others[i] + ', '
+			}
+			favorites.description += 'and ' + others[others.length - 1] + '.'
+		}
+		
+		%>
+		<button class="btn btn-min favorite-container" onclick="toggleFavorite('<%= song.id %>', this, <%= user.colorHue %>)" title= '<%= favorites.description %>'>
+			<span class="material-icons" style="<%= (favorites.isFavorited) ? ` color: hsl(${user.colorHue}, 100%, 50%);` : '' %>">favorite</span>
+			<% for (const hue of favorites.hues) { %>
+				<span class="material-icons" style="color: hsl(<%= hue %>, 100%, 50%);">favorite</span>
+			<% } %>
+		</button>
+	</td>
+	<td>
 		<div class="dropdown">
-			<button class="btn btn-min" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button class="btn btn-min dropdown-toggle" type="button" data-bs-toggle="dropdown">
 				<span class="material-icons">more_horiz</span>
 			</button>
-			<ul class="dropdown-menu dropdown-transparent" role="menu" aria-labelledby="dropdownMenu">
-				<a class="dropdown-item" onclick="playSong('<%= index %>')">Play</a>
-				<a class="dropdown-item"  href="/musics/<%= song.id%>">View</a>
-				<a class="dropdown-item" href="/musics/<%= song.id%>/edit">Edit</a>
-				<li class="dropdown-submenu">
-					<a  class="dropdown-item dropdown-item-transparent" tabindex="-1" href="#">Add to playlist</a>
-					<ul class="dropdown-menu dropdown-transparent">
-					<% playlists.forEach(playlist => { %>
-						<form action="/musics/<%= song.id%>/<%= playlist.id%>?_method=PUT" method="POST">
-							<button class="dropdown-item dropdown-item-transparent" type="submit"><%= playlist.name %></button>
-						</form>
-					<% }) %>
+			<ul class="dropdown-menu dropdown-transparent">
+				<li><a class="dropdown-item dropdown-item-transparent" onclick="playSong('<%= index %>')">Play</a></li>
+				<li><a class="dropdown-item dropdown-item-transparent"  href="/musics/<%= song.id%>">View</a></li>
+				<li><a class="dropdown-item dropdown-item-transparent" href="/musics/<%= song.id%>/edit">Edit</a></li>
+				<li>
+					<a class="dropdown-item dropdown-item-transparent" href="#">Add to playlist</a>
+					<ul class="dropdown-menu dropdown-submenu dropdown-submenu-left dropdown-transparent">
+						<% playlists.forEach(playlist => { %>
+							<li>
+								<form action="/musics/<%= song.id%>/<%= playlist.id%>?_method=PUT" method="POST">
+									<a class="dropdown-item dropdown-item-transparent" onclick='this.parentNode.submit();'><%= playlist.name %></a>
+								</form>
+							</li>
+						<% }) %>
 					</ul>
 				</li>
+				<% if (parentPlaylist) { %>
+					<li>
+						<form method="POST" action='/musics/<%= song.id%>/<%= parentPlaylist.id%>?_method=DELETE'>
+							<a class="dropdown-item dropdown-item-transparent" onclick='this.parentNode.submit();'>Remove from playlist</a>
+						</form>
+					</li>
+				<% } %>
 				<div class="dropdown-divider transparent"></div>
 				<div class="dropdown-item dropdown-item-transparent">
 					<%- include('./deleteForm.ejs', {url: `/musics/${song.id}`}) %>

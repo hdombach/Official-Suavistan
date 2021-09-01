@@ -1,5 +1,6 @@
 :root {
 	--color-highlight: 150;
+	--color-selected: hsl(var(--color-highlight), 100%, 50%);
 	--color-background-dark: hsl(var(--color-highlight), 0%, 5%);
 	--color-background-light: hsl(var(--color-highlight), 15%, 25%);
 	--color-text-important: hsl(var(--color-highlight), 40%, 80%);
@@ -9,4 +10,5 @@
 	--color-background-transparent:rgba(0, 0, 0, 0.3);
 	--color-background-transparent-highlight: rgba(255, 255, 255, 0.3);
 	--transition-length: 1s;
+	--table-height: 2rem;
 }

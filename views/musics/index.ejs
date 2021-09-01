@@ -1,15 +1,53 @@
 
 <h2>Search Songs</h2>
-<form action="/musics" method="GET">
+<form id="searchForm" onsubmit="return search(event)">
 	<div class="input-group mb-3">
 		<input class="form-control search-transparent" placeholder="Name" class="input" type="text" name="name" value= <%= searchOptions.name %>>
 		<div class="input-group-append">
-			<button class="btn btn-outline-secondary btn-transparent" type="submit">Search</button>
+			<button class="btn btn-outline-secondary btn-transparent">Search</button>
 		</div>
 	</div>
+	<div>
+		<span class="dropdown">
+			<button class="btn btn-outline btn-transparent" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Add Category
+			</button>
+			<ul class="dropdown-menu dropdown-transparent" role="menu" aria-labelledby="dropdownMenu">
+				<li>
+					<a class="dropdown-item dropdown-item-transparent" href="#">By Playlist</a>
+					<ul class="dropdown-menu dropdown-submenu dropdown-transparent">
+						<% playlists.forEach(playlist => { %>
+							<li>
+								<a class="dropdown-item dropdown-item-transparent" href="#" onclick="addFilter('playlist', `<%= playlist.name %>`, '<%= playlist.id %>')"><%= playlist.name %></a>	
+							</li>
+						<% }) %>
+					</ul>
+				</li>
+				<li>
+					<a class="dropdown-item dropdown-item-transparent" href="#">By User</a>
+					<ul class="dropdown-menu dropdown-submenu dropdown-transparent">
+						<% users.forEach(user => { %>
+							<li>
+								<a class="dropdown-item dropdown-item-transparent" href="#" onclick="addFilter('user', '<%= user.name %>', '<%= user.id %>')"><%= user.name %></a>
+							</li>
+						<% }) %>
+					</ul>
+				</li>
+				<li><a class="dropdown-item dropdown-item-transparent" onclick="addFilter('explicit', 'Exclude Explicit', 'explicit')">Exclude Explicit</a></li>
+			</ul>
+		</span>
+		<span id="filterContainer">
+
+		</span>
+	</div>
 </form>
+<br>
 <a class="link" href="/musics/new">Add Song</a>
 <br>
 <br>
-<%- include('../partials/songs.ejs', {songs: songs, playlists: playlists}) %>
+<div id="songsContainer">
+	<%- include('../partials/songs.ejs', {songs: songs, playlists: playlists, user: user}) %>
+</div>
 <%- include('../partials/controlsOverlay.ejs', {songs: songs}) %>
+
+<script src="/scripts/filters.js"></script>

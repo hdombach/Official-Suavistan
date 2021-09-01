@@ -1,28 +1,33 @@
 
 <h2><%= playlist.name %></h2>
 <p><%= playlist.description %></p>
-<a href="/musics/playlists/<%= playlist.id%>/edit">Edit</a>
-<%- include('../../partials/deleteForm', {url: `/musics/playlists/${playlist.id}`}) %>
+<% if (user.id == playlist.owner.id) { %>
+	<a href="/musics/playlists/<%= playlist.id%>/edit">Edit</a>
+	<%- include('../../partials/deleteForm', {url: `/musics/playlists/${playlist.id}`}) %>
+<% } %>
 
 <br>
-<%- include('../../partials/songs.ejs', {songs: songs, playlists: playlists}) %>
+<%- include('../../partials/songs.ejs', {songs: songs, playlists: playlists, parentPlaylist: playlist, user: user}) %>
 
 <%- include('../../partials/controlsOverlay.ejs', {songs: songs}) %>
 
-<a class="btn btn-primary" data-toggle="collapse" href="#searchCollapse" role="button" aria-expanded="false" aria-controls="searchCollapse">
-    Link with href
+<a class="btn btn-transparent" data-toggle="collapse" href="#searchCollapse" role="button" aria-expanded="false" aria-controls="searchCollapse">
+    Add Songs
 </a>
-<div class="collapse" id="searchCollapse">
-	<div class="card card-body">
+<div class="collapse <%= (searchedSongs.length > 0) ? 'show' : '' %>" id="searchCollapse">
+	<div class="">
 		<h2>Search</h2>
 		<form action="/musics/playlists/<%= playlist.id %>" method="GET">
 			<label>Name</label>
-			<input type="text" name="name" value= <%= searchOptions.name %>>
-			<button type="submit">Search</button>
+			<input class="form-control search-transparent" type="text" name="name" value= <%= searchOptions.name %>>
+			<button class="btn btn-transparent" type="submit">Search</button>
 		</form>
 		<br>
 		<% searchedSongs.forEach(song => { %>
-			<label><%= song.name %></label>
+			<form action="/musics/<%= song.id%>/<%= playlist.id%>?_method=PUT&url=<%= encodeURIComponent('/musics/playlists/' + playlist.id) %>" method="POST">
+				<button class="btn btn-min link" type="submit" "><%= song.name %></button>
+			</form>
+			<br>
 		<% }) %>
 	</div>
   </div>

@@ -1,12 +1,14 @@
 <table class="container-fluid">
 	<thead>
+		<th>#</th>
 		<th>Name</th>
 		<th>Artist</th>
+		<th></th>
 		<th></th>
 	</thead>
 	<tbody>
 		<% for (let i = 0; i < songs.length; i++) { %>
-			<%- include('./song.ejs', {song: songs[i], playlists: playlists, index: i}) %>
+			<%- include('./song.ejs', {song: songs[i], playlists: playlists, index: i, parentPlaylist: parentPlaylist, user: user}) %>
 		<% } %>
 	</tbody>
 </table>

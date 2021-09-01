@@ -8,11 +8,13 @@
 			</button>
 			<ul class="dropdown-menu dropdown-transparent" role="menu" aria-labelledby="dropdownMenu">
 				<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>">View</a>
-				<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>/edit">Edit</a>
-				<div class="dropdown-divider transparent"></div>
-				<div class="dropdown-item dropdown-item-transparent">
-					<%- include('./deleteForm.ejs', {url: `/musics/playlists/${playlist.id}`}) %>
-				</div>
+				<% if (user.id == playlist.owner.id) { %>
+					<a class="dropdown-item" href="/musics/playlists/<%= playlist.id %>/edit">Edit</a>
+					<div class="dropdown-divider transparent"></div>
+					<div class="dropdown-item dropdown-item-transparent">
+						<%- include('./deleteForm.ejs', {url: `/musics/playlists/${playlist.id}`}) %>
+					</div>
+				<% } %>
 			</ul>
 		</div>
 	</td>
