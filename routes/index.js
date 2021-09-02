@@ -56,8 +56,12 @@ router.post('/register', authentication.checkNot, async (req, res) => {
 			});
 			newUser.save().then((value) => {
 				
-				res.render('email.ejs', {user: newUser, url: `${req.hostname}/account/verify/${newUser.id}/${newUser.verificationKey}`}, (err, html) => {
-					mailing.sendEmail(newUser.email, 'Verify you account',html);
+				res.render('emails/verify.ejs', {user: newUser, url: `${req.hostname}/account/verify/${newUser.id}/${newUser.verificationKey}`, layout: 'layouts/blank.ejs'}, (err, html) => {
+					if (err) {
+						console.log(err)
+					} else {
+						mailing.sendEmail(newUser.email, 'Verify you account', html);
+					}
 				})
 
 				res.redirect('/login');
@@ -110,7 +114,7 @@ router.get('/account/verify/resend', authentication.check, async (req, res) => {
 })
 
 //should be put but forms don't work in emails so...
-router.get('/account/verify/:id/:vid', authentication.check, async (req, res) => {
+router.get('/account/verify/:id/:vid', async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id)
 		if (user.verificationKey == req.params.vid) {

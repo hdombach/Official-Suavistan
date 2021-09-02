@@ -15,7 +15,6 @@ function sendEmail(recipient, title, content) {
 		subject: title,
 		html: content
 	  };
-	  console.log(mailOptions)
 	  transporter.sendMail(mailOptions, function(error, info){
 		if (error) {
 		  console.log(error);
