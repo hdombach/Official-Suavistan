@@ -31,20 +31,3 @@
 </div>
 
 <script src="/scripts/songs.js"></script>
-
-<% var songIds = []; const hues = []; songs.forEach(song => { songIds.push('' + song.ytLink); hues.push(song.colorHue); })%>
-<script>
-	songs = <%- JSON.stringify(songIds) %>;
-	colorHues = <%- JSON.stringify(hues) %>;
-
-	let toggle = document.getElementById('viewerToggle');
-	toggle.addEventListener('click', function() {
-		document.getElementById('player').classList.toggle('hidden');
-		let icon = toggle.children[0].innerHTML
-		if (icon == 'expand_less') {
-			toggle.children[0].innerHTML = 'expand_more';
-		} else {
-			toggle.children[0].innerHTML = 'expand_less';
-		}
-	});
-</script>

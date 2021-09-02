@@ -17,6 +17,9 @@ router.get('/', authentication.check, async (req, res) =>{
 		const users = await User.find()
 		var playlists;
 		await Playlist.find().populate('owner').exec((err, allPlaylists) => {
+			if (err) {
+				throw err
+			}
 			playlists = allPlaylists.filter(playlist => playlist.owner.id == req.user.id || playlist.public)
 			res.render('musics/index.ejs', {songs: songs, users: users, searchOptions: req.query, playlists: playlists, user: req.user})
 		})

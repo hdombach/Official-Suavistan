@@ -42,7 +42,9 @@ function search(event) {
 	var fd = new FormData(document.getElementById('searchForm'));
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById('songsContainer').innerHTML = this.response
+			let container = document.getElementById('songsContainer')
+			container.innerHTML = this.response
+			runScripts(container)
 		}
 	}
 	xhttp.open('GET', `/musics/search?${new URLSearchParams(fd).toString()}&filters=${encodeURIComponent(JSON.stringify(filters))}`, true);
@@ -50,3 +52,17 @@ function search(event) {
 	return false;
 }
 
+var songs;
+var colorHues;
+
+function loadSongs(songsIn, hues) {
+	songs = songsIn
+	colorHues = hues
+}
+
+function runScripts(element) {
+	var arr = element.getElementsByTagName('script')
+	for (var n = 0; n < arr.length; n++) {
+		eval(arr[n].innerHTML)
+	}
+}

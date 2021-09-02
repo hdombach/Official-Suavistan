@@ -1,5 +1,3 @@
-var songs;
-var colorHues;
 
 var songIndex = 0;
 
@@ -43,6 +41,7 @@ function nextSong() {
 
 function playSong(index) {
 	songIndex = index;
+	//console.log(colorHues, songs)
 	if (songs) {
 		function youtube_parser(url){
 			var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
@@ -88,3 +87,15 @@ function onYouTubeIframeAPIReady() {
 		}
 	});
 }
+
+
+let toggle = document.getElementById('viewerToggle');
+toggle.addEventListener('click', function() {
+	document.getElementById('player').classList.toggle('hidden');
+	let icon = toggle.children[0].innerHTML
+	if (icon == 'expand_less') {
+		toggle.children[0].innerHTML = 'expand_more';
+	} else {
+		toggle.children[0].innerHTML = 'expand_less';
+	}
+});
