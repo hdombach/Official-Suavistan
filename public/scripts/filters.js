@@ -5,6 +5,7 @@ function addFilter(type, name, id) {
 		var thing = {type: type, name: name, id: id}
 		thing.element = createView(thing)
 		filters.push(thing)
+		search();
 	}
 }
 
@@ -14,6 +15,7 @@ function removeFilter(id) {
 		let filter = filters.splice(index, 1)[0];
 		console.log(filter)
 		filterContainer.removeChild(filter.element)
+		search();
 	}
 }
 

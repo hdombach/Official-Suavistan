@@ -37,7 +37,7 @@ function toggleFavorite(id, sender, hue) {
 	xhttp.send();
 }
 
-function search(event) {
+function search() {
 	var xhttp = new XMLHttpRequest();
 	var fd = new FormData(document.getElementById('searchForm'));
 	xhttp.onreadystatechange = function() {
