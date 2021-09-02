@@ -13,8 +13,12 @@ function toggleSong() {
 	let state = player.getPlayerState()
 	if (state == 1) {
 		player.pauseVideo()
+		tableBody.children[songIndex].classList.remove('highlighted')
+		lastSongIndex = false
 	} else if (state == 2) {
 		player.playVideo()
+		lastSongIndex = songIndex
+		tableBody.children[songIndex].classList.add('highlighted')
 	}
 }
 
@@ -39,8 +43,17 @@ function nextSong() {
 	playSong(songIndex);
 }
 
+let tableBody = document.getElementById('songTableBody')
+var lastSongIndex;
+
 function playSong(index) {
+	if (lastSongIndex) {
+		tableBody.children[songIndex].classList.remove('highlighted')
+	}
 	songIndex = index;
+	lastSongIndex = index;
+	tableBody.children[songIndex].classList.add('highlighted')
+
 	//console.log(colorHues, songs)
 	if (songs) {
 		function youtube_parser(url){

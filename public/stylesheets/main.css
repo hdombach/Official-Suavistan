@@ -74,6 +74,11 @@ table {
     border-collapse: collapse;
 }
 
+.highlighted {
+    background-color: var(--color-background-transparent-highlight);
+    color: var(--color-selected)
+}
+
 .filter {
     background-color: var(--color-background-transparent);
     border: 1px solid var(--color-border);

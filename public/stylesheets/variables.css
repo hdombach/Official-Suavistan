@@ -1,6 +1,6 @@
 :root {
 	--color-highlight: 150;
-	--color-selected: hsl(var(--color-highlight), 100%, 50%);
+	--color-selected: hsl(var(--color-highlight), 100%, 75%);
 	--color-background-dark: hsl(var(--color-highlight), 0%, 5%);
 	--color-background-light: hsl(var(--color-highlight), 15%, 25%);
 	--color-text-important: hsl(var(--color-highlight), 40%, 80%);
