@@ -13,12 +13,8 @@ function toggleSong() {
 	let state = player.getPlayerState()
 	if (state == 1) {
 		player.pauseVideo()
-		tableBody.children[songIndex].classList.remove('highlighted')
-		lastSongIndex = false
 	} else if (state == 2) {
 		player.playVideo()
-		lastSongIndex = songIndex
-		tableBody.children[songIndex].classList.add('highlighted')
 	}
 }
 
