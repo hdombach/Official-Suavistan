@@ -13,7 +13,6 @@ function removeFilter(id) {
 	let index = filters.findIndex(filter => filter.id == id)
 	if (index > -1) {
 		let filter = filters.splice(index, 1)[0];
-		console.log(filter)
 		filterContainer.removeChild(filter.element)
 		search();
 	}

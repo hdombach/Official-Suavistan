@@ -17,6 +17,5 @@
 
 <% var songIds = []; const hues = []; songs.forEach(song => { songIds.push('' + song.ytLink); hues.push(song.colorHue); })%>
 <script>
-	console.log('had')
 	loadSongs(<%- JSON.stringify(songIds) %>, <%- JSON.stringify(hues) %>);
 </script>
