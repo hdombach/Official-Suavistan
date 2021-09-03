@@ -12,3 +12,10 @@
 	--transition-length: 1s;
 	--table-height: 2rem;
 }
+
+
+@supports not (backdrop-filter: blur(5px)) {
+	:root {
+		--color-background-transparent:rgba(0, 0, 0, 0.7);
+	}
+}

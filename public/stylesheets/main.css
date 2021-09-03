@@ -144,6 +144,7 @@ table {
 .controls > #control-buttons {
     background-color: var(--color-background-transparent);
     backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     flex-wrap: nowrap;
     pointer-events: fill;
 }
@@ -247,9 +248,10 @@ table {
 }
 
 .dropdown-transparent {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--color-background-transparent);
     color: var(--color-text);
     backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .dropdown-transparent > li, .dropdown-item-transparent {
