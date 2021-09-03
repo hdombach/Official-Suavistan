@@ -20,6 +20,10 @@ function toggleSong() {
 
 function previousSong() {
 	//if it is now yet 2 seconds then goto previous song else reset
+	if (isShuffled) {
+		playSong(previousRandomSong())
+		return;
+	}
 	if (player.getCurrentTime() > 5) {
 		playSong(songIndex);
 	} else {
@@ -32,6 +36,10 @@ function previousSong() {
 }
 
 function nextSong() {
+	if (isShuffled) {
+		playSong(randomSongIndex())
+		return;
+	}
 	songIndex++;
 	if (songIndex >= songs.length) {
 		songIndex = 0;
@@ -43,7 +51,7 @@ var lastSongIndex;
 
 function playSong(index) {
 	let tableBody = document.getElementById('songTableBody')
-	if (lastSongIndex) {
+	if (lastSongIndex != undefined) {
 		tableBody.children[lastSongIndex].classList.remove('highlighted')
 	}
 	songIndex = index;
@@ -108,3 +116,44 @@ toggle.addEventListener('click', function() {
 		toggle.children[0].innerHTML = 'expand_less';
 	}
 });
+
+var isShuffled = false;
+let shuffle = document.getElementById('shuffleToggle')
+shuffle.addEventListener('click', function() {
+	let icon = shuffle.children[0].innerHTML
+	console.log(icon)
+	if (icon == 'shuffle') {
+		shuffle.children[0].innerHTML = 'shuffle_on';
+		isShuffled = true;
+	} else {
+		shuffle.children[0].innerHTML = 'shuffle';
+		isShuffled = false;
+	}
+});
+
+
+var shuffleHistory = [];
+
+
+function randomSongIndex() {
+	if (shuffleHistory.length == songs.length) {
+		let index = shuffleHistory.shift()
+		shuffleHistory.push(index)
+		return index
+	} else {
+		var index;
+		do {
+			index = Math.floor(Math.random() * songs.length);
+		} while (shuffleHistory.includes(index))
+		shuffleHistory.push(index)
+		return index;
+	}
+}
+
+function previousRandomSong() {
+	if (shuffleHistory.length > 0) {
+		return shuffleHistory.pop()
+	} else {
+		return Math.floor(Math.random() * songs.length);
+	}
+}
