@@ -39,16 +39,16 @@ function nextSong() {
 	playSong(songIndex);
 }
 
-let tableBody = document.getElementById('songTableBody')
 var lastSongIndex;
 
 function playSong(index) {
+	let tableBody = document.getElementById('songTableBody')
 	if (lastSongIndex) {
-		tableBody.children[songIndex].classList.remove('highlighted')
+		tableBody.children[lastSongIndex].classList.remove('highlighted')
 	}
 	songIndex = index;
 	lastSongIndex = index;
-	tableBody.children[songIndex].classList.add('highlighted')
+	tableBody.children[lastSongIndex].classList.add('highlighted')
 
 	//console.log(colorHues, songs)
 	if (songs) {

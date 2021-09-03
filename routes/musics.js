@@ -59,7 +59,6 @@ router.get('/search', authentication.check, async (req, res) => {
 	if (explicit) {
 		searchOptions.explicit = false
 	}
-	console.log(searchOptions)
 	try {
 		const songs = await Song.find(searchOptions).populate('favorites').exec()
 		const users = await User.find()
@@ -132,7 +131,6 @@ router.put('/:id', authentication.check, async (req, res) => {
 		song.artist = req.body.artist
 		song.ytLink = req.body.ytLink
 		song.explicit = Boolean(req.body.explicit)
-		console.log(req.body.colorhue)
 		song.colorHue = req.body.colorHue
 
 		await song.save()
