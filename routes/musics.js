@@ -13,7 +13,7 @@ router.get('/', authentication.check, async (req, res) =>{
 		searchOptions.name = new RegExp(req.query.name, 'i')
 	}
 	try {
-		const songs = await Song.find(searchOptions).populate('favorites').exec()
+		const songs = await Song.find(searchOptions).populate('favorites').collation({'locale':'en'}).sort('name').exec()
 		const users = await User.find()
 		var playlists;
 		await Playlist.find().populate('owner').exec((err, allPlaylists) => {
@@ -60,7 +60,7 @@ router.get('/search', authentication.check, async (req, res) => {
 		searchOptions.explicit = false
 	}
 	try {
-		const songs = await Song.find(searchOptions).populate('favorites').exec()
+		const songs = await Song.find(searchOptions).populate('favorites').collation({'locale':'en'}).sort('name').exec()
 		const users = await User.find()
 		var playlists;
 		await Playlist.find().populate('owner').exec((err, allPlaylists) => {

@@ -55,7 +55,7 @@ router.get('/:id', authentication.check, async (req, res) => {
 			playlists = allPlaylists.filter(playlist => playlist.owner.id == req.user.id || playlist.public)
 			
 			const playlist = await Playlist.findById(req.params.id).populate('owner').exec()
-			const songs = await Song.find({playlists: req.params.id}).populate('favorites').exec()
+			const songs = await Song.find({playlists: req.params.id}).populate('favorites').collation({'locale':'en'}).sort('name').exec()
 			var searchedSongs = []
 			if (searchOptions.name) {
 				let name = req.query.name.toLowerCase()
